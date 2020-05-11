@@ -1,14 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component }  from 'react';
+import mapboxgl from 'mapbox-gl'
+// import { connect } from 'react-redux';
 import './App.css';
 
-function App() {
-  return (
-    <div>
-      aaaa
-      bbbb
-    </div>
-  );
+// Appコンポーネント
+class App extends Component {
+
+
+  mapstyle = {
+    width:"800px",
+    height:"300px",
+    backgroundColor:"red"
+  }
+
+  componentDidMount() {
+    this.map = new mapboxgl.Map({
+      container: this.container,
+      style: 'mapbox://styles/mapbox/streets-v9',
+    })
+  }
+
+  componentWillUnmount() {
+    this.map.remove()
+  }
+
+
+
+
+  render() {
+    return(
+      <div>
+        MAP
+        <div style={this.mapstyle} className={'map'} ref={e => (this.container = e)}></div>
+      </div>
+    )
+  }
+
 }
 
 export default App;
