@@ -140,6 +140,9 @@ class App extends Component {
     marker.setLngLat([140.72116702175174, 35.64997652994234]);
     marker.addTo(this.mapbox);
 
+    var ll = new mapboxgl.LngLat(140.72116702175174, 35.64997652994234);
+    this.mapbox.panTo(ll)
+
     this.setState((state)=> ({
       
       num: state.num + 1
@@ -159,7 +162,8 @@ class App extends Component {
       <div>
         MAP
         <div style={this.mapstyleee} className={'map'} ref={e => (this.container = e)}></div>
-        <button style={this.btnStyle} onClick={this.moveMap}>Click</button>
+        {/* <button style={this.btnStyle} onClick={this.moveMap}>Click</button> */}
+        <button onClick={this.moveMap}>Click</button>
         <div>{this.state.num}</div>
       </div>
     )
