@@ -81,6 +81,9 @@ class App extends Component {
     
 
     this.moveMap = this.moveMap.bind(this);
+    // this.moveTokyo = this.moveTokyo.bind(this);
+    // this.moveSinagawa = this.moveSinagawa.bind(this);
+    // this.moveSinbasi = this.moveSinbasi.bind(this);
   }
 
 
@@ -137,14 +140,13 @@ class App extends Component {
   moveMap(e) {
 
     var marker = new mapboxgl.Marker();
-    marker.setLngLat([140.72116702175174, 35.64997652994234]);
+    marker.setLngLat([e._targetInst.memoizedProps.lat, e._targetInst.memoizedProps.lon]);
     marker.addTo(this.mapbox);
 
-    var ll = new mapboxgl.LngLat(140.72116702175174, 35.64997652994234);
+    var ll = new mapboxgl.LngLat(e._targetInst.memoizedProps.lat, e._targetInst.memoizedProps.lon);
     this.mapbox.panTo(ll)
 
     this.setState((state)=> ({
-      
       num: state.num + 1
     }))
 
@@ -163,7 +165,10 @@ class App extends Component {
         MAP
         <div style={this.mapstyleee} className={'map'} ref={e => (this.container = e)}></div>
         {/* <button style={this.btnStyle} onClick={this.moveMap}>Click</button> */}
-        <button onClick={this.moveMap}>Click</button>
+        <button onClick={this.moveMap} lat='140.72116702175174' lon='35.64997652994234' >Click</button>
+        <button onClick={this.moveMap} lat='139.767036' lon='35.680865'>東京</button>
+        <button onClick={this.moveMap} lat='139.758153' lon='35.666397'>新橋</button>
+        <button onClick={this.moveMap} lat='139.74015' lon='35.629867'>品川</button>
         <div>{this.state.num}</div>
       </div>
     )
