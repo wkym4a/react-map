@@ -76,7 +76,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      num: 0
+      num: 0,
+      marker: []
     }
     
 
@@ -121,7 +122,7 @@ class App extends Component {
     marker.addTo(this.mapbox);
 
     this.setState((state) => ({
-      num: 2
+      marker: marker
     }))
 
     // // this.setState((state) => ({
@@ -138,10 +139,16 @@ class App extends Component {
   }
 
   moveMap(e) {
+    // それまで表示していたピンを削除する
+    this.state.marker.remove();
 
     var marker = new mapboxgl.Marker();
     marker.setLngLat([e._targetInst.memoizedProps.lat, e._targetInst.memoizedProps.lon]);
     marker.addTo(this.mapbox);
+
+    this.setState((state) => ({
+      marker: marker
+    }))
 
     var ll = new mapboxgl.LngLat(e._targetInst.memoizedProps.lat, e._targetInst.memoizedProps.lon);
     this.mapbox.panTo(ll)
