@@ -82,6 +82,8 @@ class App extends Component {
     
 
     this.moveMap = this.moveMap.bind(this);
+    this.makePin = this.makePin.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
     // this.moveTokyo = this.moveTokyo.bind(this);
     // this.moveSinagawa = this.moveSinagawa.bind(this);
     // this.moveSinbasi = this.moveSinbasi.bind(this);
@@ -117,6 +119,8 @@ class App extends Component {
       zoom: 8
     })
 
+
+
     var marker = new mapboxgl.Marker();
     marker.setLngLat([139.72116702175174, 35.64997652994234]);
     marker.addTo(this.mapbox);
@@ -124,6 +128,31 @@ class App extends Component {
     this.setState((state) => ({
       marker: marker
     }))
+
+
+    var testmap = this.mapbox
+    var markinfo = this.state.marker
+
+    this.mapbox.on('dblclick', function(e) {
+
+      var tt = 1;
+      tt = 2;
+
+      // markinfo.remove();
+      
+    this.setState((state)=> ({
+      num: state.num + 1
+    }))
+
+      var marker2 = new mapboxgl.Marker();
+      marker2.setLngLat([e.lngLat.lng, e.lngLat.lat]);
+
+      marker2.addTo(testmap);
+      // marker2.addTo(this.mapbox);
+
+    // それまで表示していたピンを削除する
+    // this.state.marker.remove();
+    });
 
     // // this.setState((state) => ({
     // //   map: [this.map]
@@ -138,12 +167,23 @@ class App extends Component {
     // this.map.remove()
   }
 
+  makePin(e) {
+    // // それまで表示していたピンを削除する
+    // this.state.marker.remove();
+
+  }
+
   moveMap(e) {
     // それまで表示していたピンを削除する
     this.state.marker.remove();
 
     var marker = new mapboxgl.Marker();
     marker.setLngLat([e._targetInst.memoizedProps.lat, e._targetInst.memoizedProps.lon]);
+
+    var popup = new mapboxgl.Popup();
+    popup.setHTML('<h3>' + e._targetInst.memoizedProps.children + '</h3>');
+    marker.setPopup(popup);
+
     marker.addTo(this.mapbox);
 
     this.setState((state) => ({
@@ -170,7 +210,7 @@ class App extends Component {
     return(
       <div>
         MAP
-        <div style={this.mapstyleee} className={'map'} ref={e => (this.container = e)}></div>
+        <div style={this.mapstyleee} className={'map'}  onClick={this.makePin}  ref={e => (this.container = e)}></div>
         {/* <button style={this.btnStyle} onClick={this.moveMap}>Click</button> */}
         <button onClick={this.moveMap} lat='140.72116702175174' lon='35.64997652994234' >Click</button>
         <button onClick={this.moveMap} lat='139.767036' lon='35.680865'>東京</button>
